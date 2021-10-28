@@ -1,0 +1,124 @@
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useState } from 'react';
+import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+//import MainPage from './Pages/MainPage';
+
+const Stack = createNativeStackNavigator();
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'CafeManage' }}
+        />
+        <Stack.Screen 
+          name="MainPage" 
+          component={MainPage}
+          options={{ title: 'Anasayfa' }}
+        />
+        <Stack.Screen 
+          name="Menu" 
+          component={Menu}
+          options={{ title: 'Menu' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+const HomeScreen = ({ navigation }) => {
+  const [code, changeCode] = useState();
+  return (
+    <View style={styles.main}>
+    <View style={styles.code}>
+      <Text>Code:</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={changeCode}
+        value={code}
+        placeholder="Enter your login code"
+        keyboardType="numeric"
+      />
+      <Button 
+        title='Login'
+        onPress={() =>
+          navigation.navigate('MainPage', { code: code })
+        }
+      />
+    </View>
+    </View>
+  );
+};
+
+const MainPage = () => {
+  const [numberOfTables, changenumberOfTables] = useState(5);
+  return (
+    /*
+    <View style={[{flexDirection: "row"}]}>
+      <View style={[flex=5, backgroundColor='#ffa']}>
+
+      </View>
+      <View  style={[flex=1, backgroundColor='#faa']}>
+
+      </View>
+    </View>
+    */
+    <View style={styles.mainpage}>
+      <Button 
+        title='Menu'
+        onPress={() =>
+          navigation.push('Menu', { code: code })
+        }
+      />
+    </View>
+  );
+};
+
+const Menu = () => {
+  const [numberOfTables, changenumberOfTables] = useState(5);
+  return (
+    <View style={styles.mainpage}>
+      <Button 
+        title='Menuye geldin'
+      />
+    </View>
+  );
+};
+
+export default App;
+
+const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  code: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+  table: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#ffa',
+  },
+  mainpage: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#ffa',
+  },
+});
